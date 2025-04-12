@@ -50,4 +50,14 @@ public class RedBirdController : MonoBehaviour
         Vector2 launchDirection = startPosition - rb.position;
         rb.AddForce(launchDirection * launchPower);
     }
+
+    public Vector2 GetLaunchDirection()
+    {
+        return (startPosition - rb.position).normalized;
+    }
+
+    public float GetLaunchPower()
+    {
+        return launchPower;
+    }
 }

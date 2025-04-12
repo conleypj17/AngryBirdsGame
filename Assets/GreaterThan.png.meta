@@ -1,10 +1,10 @@
 fileFormatVersion: 2
-guid: 179f3af950240d34b93d8f599ed6e0f7
+guid: 325697a9726b43c40b019b075681c91a
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: -4346244404228752641
-    second: Arrow_0
+      213: -3153817942190130370
+    second: GreaterThan_0
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -100,7 +100,7 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: Arrow_0
+      name: GreaterThan_0
       rect:
         serializedVersion: 2
         x: 54
@@ -115,8 +115,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: ffa7ae2edb90fa3c0800000000000000
-      internalID: -4346244404228752641
+      spriteID: e3bf08d8a436b34d0800000000000000
+      internalID: -3153817942190130370
       vertices: []
       indices: 
       edges: []
