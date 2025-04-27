@@ -11,6 +11,7 @@ public class RedBirdController : MonoBehaviour
     Vector2 startPosition;  //starting position of the red bird
     Rigidbody2D rb; //access rigid body from code
     Collider2D col;
+    Vector3 initialPosition;
 
     bool isDragging = false;
 
@@ -21,6 +22,7 @@ public class RedBirdController : MonoBehaviour
     //start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
+        initialPosition = transform.position;
         rb = gameObject.GetComponent<Rigidbody2D>(); //get to the current gameobject's rigidbody
         col = gameObject.GetComponent<Collider2D>();
         rb.isKinematic = true; //this is so gravity doesn't pull it down while dragging
@@ -30,6 +32,9 @@ public class RedBirdController : MonoBehaviour
     //updated is called once per frame
     void Update()
     {
+        GetComponent<LineRenderer>().SetPosition(0, transform.position);
+        GetComponent<LineRenderer>().SetPosition(1, initialPosition);
+
         gameObject.SetActive(true);
         if (isDragging)
         {
@@ -41,6 +46,7 @@ public class RedBirdController : MonoBehaviour
     void OnMouseDown()
     {
         isDragging = true;
+        GetComponent<LineRenderer>().enabled = true;
     }
 
     private void OnMouseUp()
@@ -49,6 +55,8 @@ public class RedBirdController : MonoBehaviour
         rb.isKinematic = false;
         Vector2 launchDirection = startPosition - rb.position;
         rb.AddForce(launchDirection * launchPower);
+
+        GetComponent<LineRenderer>().enabled = false;
     }
 
     public Vector2 GetLaunchDirection()
