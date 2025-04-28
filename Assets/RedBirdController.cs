@@ -1,7 +1,8 @@
 using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
-using System; //package for action
+using System;
+using Unity.VisualScripting; //package for action
 
 public class RedBirdController : MonoBehaviour
 {
@@ -42,6 +43,7 @@ public class RedBirdController : MonoBehaviour
             mouseWorldPos.z = 0; // Keep it on the 2D plane
             rb.position = mouseWorldPos;
         }
+ 
     }
     void OnMouseDown()
     {
@@ -67,5 +69,18 @@ public class RedBirdController : MonoBehaviour
     public float GetLaunchPower()
     {
         return launchPower;
+    }
+
+    bool outOfScreen()
+    {
+        Vector3 cur_pos = transform.localPosition;
+        if (cur_pos.x > 10 || cur_pos.y < -6 || cur_pos.y > 6)
+            return true;
+        return false;
+    }
+
+    void resetPosition()
+    {
+
     }
 }
