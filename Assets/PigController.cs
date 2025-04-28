@@ -2,15 +2,28 @@ using UnityEngine;
 
 public class PigController : MonoBehaviour
 {
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
+    [SerializeField] private GameObject cloudParticlePrefab;
+    private void OnCollisionEnter2D(Collision2D collision)
     {
-        
-    }
+        RedBirdController bird = collision.collider.GetComponent<RedBirdController>();
+        if (bird != null)
+        {
+            Instantiate(cloudParticlePrefab, transform.position, Quaternion.identity);
+            Destroy(gameObject);
+            return;
+        }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
+        PigController enemy = collision.collider.GetComponent<PigController>();
+        if (enemy != null)
+        {
+            return;
+        }
+
+        if (collision.contacts[0].normal.y < -0.5)
+        {
+            Instantiate(cloudParticlePrefab, transform.position, Quaternion.identity);
+            Destroy(gameObject);
+        }
+
     }
 }
