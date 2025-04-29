@@ -3,11 +3,15 @@ using UnityEngine.SceneManagement;
 
 public class EggController : MonoBehaviour
 {
+    [SerializeField] private GameObject explosionPrefab;
+
+    private bool isBreaking = false;
+
     private void OnCollisionEnter2D(Collision2D collision)
     {
         if (ShouldRestart(collision.gameObject))
         {
-            RestartLevel();
+            BreakEgg();
         }
     }
 
@@ -15,13 +19,34 @@ public class EggController : MonoBehaviour
     {
         if (ShouldRestart(other.gameObject))
         {
-            RestartLevel();
+            BreakEgg();
         }
+    }
+
+    private void BreakEgg()
+    {
+        if (isBreaking) return;
+        isBreaking = true;
+
+        if (explosionPrefab != null)
+        {
+            GameObject explosion = Instantiate(explosionPrefab, transform.position, Quaternion.identity);
+
+            // Try to play the particle system manually
+            ParticleSystem ps = explosion.GetComponent<ParticleSystem>();
+            if (ps != null)
+            {
+                ps.Play();
+            }
+        }
+
+        Destroy(gameObject); // destroy egg object
+
+        Invoke(nameof(RestartLevel), 1f); // wait 1 second so particles can play
     }
 
     private bool ShouldRestart(GameObject obj)
     {
-        // Restart if the object has BirdController or BoxController or PigController script
         return obj.GetComponent<RedBirdController>() != null ||
                obj.GetComponent<BoxController>() != null ||
                obj.GetComponent<PigController>() != null;
