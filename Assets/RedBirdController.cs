@@ -2,7 +2,8 @@ using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
 using System;
-using Unity.VisualScripting; //package for action
+using Unity.VisualScripting;
+using UnityEngine.SceneManagement; //package for action
 
 public class RedBirdController : MonoBehaviour
 {
@@ -13,6 +14,8 @@ public class RedBirdController : MonoBehaviour
     Rigidbody2D rb; //access rigid body from code
     Collider2D col;
     Vector3 initialPosition;
+    private bool birdWasLaunched;
+    private float timeSittingAround;
 
     bool isDragging = false;
 
@@ -36,6 +39,11 @@ public class RedBirdController : MonoBehaviour
         GetComponent<LineRenderer>().SetPosition(0, transform.position);
         GetComponent<LineRenderer>().SetPosition(1, initialPosition);
 
+        if (birdWasLaunched && GetComponent<Rigidbody2D>().linearVelocity.magnitude <= 0.1f)
+        {
+            timeSittingAround += Time.deltaTime;
+        }
+
         gameObject.SetActive(true);
         if (isDragging)
         {
@@ -43,7 +51,12 @@ public class RedBirdController : MonoBehaviour
             mouseWorldPos.z = 0; // Keep it on the 2D plane
             rb.position = mouseWorldPos;
         }
- 
+        if (transform.position.y > 40 || transform.position.y < -40 || transform.position.x > 65 || transform.position.x < -20 || timeSittingAround > 3)
+        {
+            string currentSceneName = SceneManager.GetActiveScene().name;
+            SceneManager.LoadScene(currentSceneName);
+        }
+
     }
     void OnMouseDown()
     {
@@ -57,6 +70,8 @@ public class RedBirdController : MonoBehaviour
         rb.isKinematic = false;
         Vector2 launchDirection = startPosition - rb.position;
         rb.AddForce(launchDirection * launchPower);
+        GetComponent<Rigidbody2D>().gravityScale = 1;
+        birdWasLaunched = true;
 
         GetComponent<LineRenderer>().enabled = false;
     }
