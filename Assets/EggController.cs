@@ -1,23 +1,34 @@
 using UnityEngine;
-using UnityEngine.SceneManagement; // Needed to reload the scene
+using UnityEngine.SceneManagement;
 
 public class EggController : MonoBehaviour
 {
-    // Called when the egg collides with another collider (with Rigidbody2D involved)
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        RestartLevel();
+        if (ShouldRestart(collision.gameObject))
+        {
+            RestartLevel();
+        }
     }
 
-    // Optionally, if you are using triggers instead of collisions, use this:
     private void OnTriggerEnter2D(Collider2D other)
     {
-        RestartLevel();
+        if (ShouldRestart(other.gameObject))
+        {
+            RestartLevel();
+        }
+    }
+
+    private bool ShouldRestart(GameObject obj)
+    {
+        // Restart if the object has BirdController or BoxController or PigController script
+        return obj.GetComponent<RedBirdController>() != null ||
+               obj.GetComponent<BoxController>() != null ||
+               obj.GetComponent<PigController>() != null;
     }
 
     private void RestartLevel()
     {
-        // Reloads the current active scene
         SceneManager.LoadScene(SceneManager.GetActiveScene().name);
     }
 }

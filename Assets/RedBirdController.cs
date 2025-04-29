@@ -85,17 +85,4 @@ public class RedBirdController : MonoBehaviour
     {
         return launchPower;
     }
-
-    bool outOfScreen()
-    {
-        Vector3 cur_pos = transform.localPosition;
-        if (cur_pos.x > 10 || cur_pos.y < -6 || cur_pos.y > 6)
-            return true;
-        return false;
-    }
-
-    void resetPosition()
-    {
-
-    }
 }
