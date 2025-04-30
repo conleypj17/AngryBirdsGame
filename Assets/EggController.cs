@@ -42,7 +42,7 @@ public class EggController : MonoBehaviour
 
         Destroy(gameObject); // destroy egg object
 
-        Invoke(nameof(RestartLevel), 1f); // wait 1 second so particles can play
+        RestartLevel();
     }
 
     private bool ShouldRestart(GameObject obj)
